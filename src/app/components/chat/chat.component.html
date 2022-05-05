@@ -1,18 +1,22 @@
 <h1 class="mt-5">Mensajes</h1>
 <hr />
 
+<section class="messages mt-5" id="message">
+  <ul class="list-group">
+    <li *ngFor="let message of messages" class="list-group-item">
+      {{ message.from }}: {{ message.body }}
+    </li>
+  </ul>
+</section>
+
 <form (ngSubmit)="onSend()">
   <input
     [(ngModel)]="text"
     type="text"
     name="text"
-    class="form-control"
+    class="form-control chat-input"
     placeholder="Mensaje..."
     autocomplete="off"
     autofocus
   />
 </form>
-
-<section class="messages" *ngIf="messages$ | async as messages">
-  {{ messages | json }}
-</section>
