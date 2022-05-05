@@ -1,0 +1,26 @@
+<h1>Login</h1>
+<hr />
+
+<section class="row justify-content-center">
+  <div class="col-9">
+    <form class="p-4" (ngSubmit)="login()">
+      <input
+        type="text"
+        [(ngModel)]="name"
+        name="name"
+        class="form-control"
+        autocomplete="off"
+        autofocus
+        placeholder="Nombre de usuario"
+      />
+
+      <button
+        type="submit"
+        [disabled]="name.length === 0"
+        class="mt-2 btn btn-primary w-100"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</section>

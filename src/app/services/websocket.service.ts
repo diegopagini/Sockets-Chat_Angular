@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   socketStatus = false;
+  user!: User;
 
   constructor(private socket: Socket) {
     this.checkStatus();
@@ -47,5 +49,18 @@ export class WebsocketService {
 
   listen(event: string): Observable<any> {
     return this.socket.fromEvent(event);
+  }
+
+  /**
+   * Método para loguearse en nuestro socket.
+   * @param {string} name
+   */
+
+  loginWS(name: string): void {
+    console.log('Configurando', name);
+
+    this.emit('configure-user', { name }, (res: any) => {
+      console.log(res);
+    });
   }
 }
