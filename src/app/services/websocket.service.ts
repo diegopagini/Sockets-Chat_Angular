@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,15 @@ export class WebsocketService {
 
   emit(event: string, payload?: any, callback?: Function): void {
     this.socket.emit(event, payload, callback);
+  }
+
+  /**
+   * Método para esuchar cualquier evento de nuestro socket.
+   * @param {string} event
+   * @returns {Observable<any>}
+   */
+
+  listen(event: string): Observable<any> {
+    return this.socket.fromEvent(event);
   }
 }

@@ -1,0 +1,18 @@
+<h1 class="mt-5">Mensajes</h1>
+<hr />
+
+<form (ngSubmit)="onSend()">
+  <input
+    [(ngModel)]="text"
+    type="text"
+    name="text"
+    class="form-control"
+    placeholder="Mensaje..."
+    autocomplete="off"
+    autofocus
+  />
+</form>
+
+<section class="messages" *ngIf="messages$ | async as messages">
+  {{ messages | json }}
+</section>
