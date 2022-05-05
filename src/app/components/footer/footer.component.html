@@ -1,0 +1,11 @@
+<footer class="footer p-2 bg-dark">
+  <p class="status">
+    Server status:
+    <span *ngIf="websocketService.socketStatus" class="text-success"
+      >Online</span
+    >
+    <span *ngIf="!websocketService.socketStatus" class="text-danger"
+      >Offline</span
+    >
+  </p>
+</footer>
