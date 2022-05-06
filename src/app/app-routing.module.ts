@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
       import('./modules/messages/messages.module').then(
         (m) => m.MessagesModule
       ),
+    canActivate: [UserGuard],
   },
   {
     path: '',

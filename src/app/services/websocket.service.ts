@@ -8,10 +8,11 @@ import { User } from '../interfaces/user.interface';
 })
 export class WebsocketService {
   socketStatus = false;
-  user!: User;
+  private user: User;
 
   constructor(private socket: Socket) {
     this.checkStatus();
+    this.loadStorage();
   }
 
   /**
@@ -56,11 +57,38 @@ export class WebsocketService {
    * @param {string} name
    */
 
-  loginWS(name: string): void {
-    console.log('Configurando', name);
-
-    this.emit('configure-user', { name }, (res: any) => {
-      console.log(res);
+  loginWS(name: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.emit('configure-user', { name }, () => {
+        this.user = new User(name);
+        this.saveUserInLocalStorage();
+        resolve();
+      });
     });
+  }
+
+  /**
+   * Método para obtener nuestro usuario.
+   * @returns User
+   */
+
+  getUser(): User {
+    return this.user;
+  }
+
+  /**
+   * Método para guardar nuestro usuario en localStorage.
+   */
+  private saveUserInLocalStorage(): void {
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+  /**
+   * Método para obtener nuestro usuario del localStorage.
+   */
+
+  private loadStorage(): void {
+    if (localStorage.getItem('user'))
+      this.user = JSON.parse(localStorage.getItem('user') as string);
   }
 }

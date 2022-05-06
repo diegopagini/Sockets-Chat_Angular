@@ -1,4 +1,6 @@
-<h1>Usuario: <small>xxxx</small></h1>
+<h1 *ngIf="user">
+  Usuario: <small>{{ user.name }}</small>
+</h1>
 
 <section class="row">
   <div class="col-6">
