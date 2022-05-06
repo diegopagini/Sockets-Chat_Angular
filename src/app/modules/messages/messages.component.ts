@@ -15,4 +15,11 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.wsService.getUser();
   }
+
+  /**
+   * Método para desloguearse.
+   */
+  logout(): void {
+    this.wsService.logoutWS();
+  }
 }

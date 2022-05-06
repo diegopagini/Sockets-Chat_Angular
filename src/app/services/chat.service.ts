@@ -12,7 +12,6 @@ export class ChatService {
    * Método para enviar un mensaje al servidor.
    * @param {string} message
    */
-
   sendMessage(message: string): void {
     const payload = {
       from: this.wsService.getUser().name,
@@ -36,5 +35,20 @@ export class ChatService {
    */
   getPrivateMessages(): Observable<any> {
     return this.wsService.listen('private-message');
+  }
+
+  /**
+   * Método para escuchar los usuarios activos.
+   * @returns Obsevable<any>
+   */
+  getActiveUsers(): Observable<any> {
+    return this.wsService.listen('active-users');
+  }
+
+  /**
+   * Método para emitir la petición de usuarios activos.
+   */
+  emitActiveUsers(): void {
+    this.wsService.emit('active-users');
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
@@ -8,9 +9,9 @@ import { User } from '../interfaces/user.interface';
 })
 export class WebsocketService {
   socketStatus = false;
-  private user: User;
+  private user: User | any;
 
-  constructor(private socket: Socket) {
+  constructor(private socket: Socket, private router: Router) {
     this.loadStorage();
     this.checkStatus();
   }
@@ -21,12 +22,13 @@ export class WebsocketService {
 
   checkStatus(): void {
     this.socket.on('connect', () => {
-      console.log('Conectado al servidor');
+      // console.log('Conectado al servidor');
       this.socketStatus = true;
+      this.loadStorage();
     });
 
     this.socket.on('disconnect', () => {
-      console.log('Desconectado del servidor');
+      // console.log('Desconectado del servidor');
       this.socketStatus = false;
     });
   }
@@ -66,6 +68,23 @@ export class WebsocketService {
         resolve();
       });
     });
+  }
+
+  /**
+   * Método para desloguearse de nuestro socket.
+   */
+
+  logoutWS() {
+    this.user = null;
+    localStorage.removeItem('user');
+    this.emit(
+      'configure-user',
+      {
+        name: 'no-name',
+      },
+      () => {}
+    );
+    this.router.navigate(['/login']);
   }
 
   /**

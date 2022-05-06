@@ -21,6 +21,9 @@ export class ChatComponent implements OnInit, OnDestroy {
      */
     this.element = document.getElementById('message');
 
+    /**
+     * Esta es una forma de controlar la subscripción cuando no se utiliza el pipe async.
+     */
     this.subscription = this.chatService.getMessages().subscribe((message) => {
       /**
        * Cada vez que se detecta un nuevo mensaje este se agrega a la lista de mensajes y se hace scroll

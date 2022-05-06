@@ -1,1 +1,12 @@
-<p>user-list works!</p>
+<h2 class="mt-5">Usuarios</h2>
+<hr />
+
+<section *ngIf="users$ | async as users" class="users">
+  <ul class="list-group mt-5">
+    <li *ngFor="let user of users" class="list-group-item">
+      <strong class="p-1">{{ user.name }}</strong>
+      <span class="badge bg-primary">{{ user.room }}</span>
+      <span class="badge bg-info">{{ user.id }}</span>
+    </li>
+  </ul>
+</section>
