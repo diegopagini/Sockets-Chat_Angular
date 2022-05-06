@@ -15,7 +15,7 @@ export class ChatService {
 
   sendMessage(message: string): void {
     const payload = {
-      from: 'Diego',
+      from: this.wsService.getUser().name,
       body: message,
     };
 
@@ -24,9 +24,17 @@ export class ChatService {
 
   /**
    * Método para recibir todos los mensajes.
-   * @returns {Observable<any>}
+   * @returns Observable<any>
    */
   getMessages(): Observable<any> {
     return this.wsService.listen('new-message');
+  }
+
+  /**
+   * Método para escuchar mensajes privados.
+   * @returns Obsevable<any>
+   */
+  getPrivateMessages(): Observable<any> {
+    return this.wsService.listen('private-message');
   }
 }

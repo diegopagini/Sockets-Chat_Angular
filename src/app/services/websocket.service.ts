@@ -11,8 +11,8 @@ export class WebsocketService {
   private user: User;
 
   constructor(private socket: Socket) {
-    this.checkStatus();
     this.loadStorage();
+    this.checkStatus();
   }
 
   /**
@@ -55,6 +55,7 @@ export class WebsocketService {
   /**
    * Método para loguearse en nuestro socket.
    * @param {string} name
+   * @returns Promise<void>
    */
 
   loginWS(name: string): Promise<void> {
@@ -88,7 +89,9 @@ export class WebsocketService {
    */
 
   private loadStorage(): void {
-    if (localStorage.getItem('user'))
+    if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user') as string);
+      this.loginWS(this.user.name);
+    }
   }
 }
